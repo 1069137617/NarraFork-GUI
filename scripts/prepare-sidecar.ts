@@ -76,7 +76,11 @@ if (!source || !existsSync(source)) {
 		);
 	}
 	console.log("未找到 dist/ 里的 Windows 构建，开始执行 bun run build:windows …");
-	execFileSync("bun", ["run", "build:windows"], { cwd: repoRoot, stdio: "inherit" });
+	// 用当前 Bun 的真实 exe，避免 Windows 上 `bun` 只有 .cmd 垫片。
+	execFileSync(process.execPath, ["run", "build:windows"], {
+		cwd: repoRoot,
+		stdio: "inherit",
+	});
 	source = newestWindowsBuild();
 	if (!source) {
 		throw new Error("构建完成但仍未在 dist/ 找到 narrafork-*-windows-x64.exe");
