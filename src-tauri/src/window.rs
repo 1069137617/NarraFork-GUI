@@ -32,7 +32,7 @@ pub fn ensure_splash(app: &AppHandle) {
 	let _ = create_splash(app);
 }
 
-/// 托盘/二次启动：优先主窗口，其次 splash。
+/// 托盘/二次启动：优先主窗口，其次已就绪的 URL，最后 splash。
 pub fn focus_or_create(app: &AppHandle) {
 	if let Some(window) = app.get_webview_window("main") {
 		let _ = window.show();
@@ -40,6 +40,17 @@ pub fn focus_or_create(app: &AppHandle) {
 		let _ = window.set_focus();
 		return;
 	}
+
+	// 用户关掉主窗口后应用仍留在托盘；此时后端已就绪，直接重建主窗口，
+	// 不要退回到 splash 再等一次启动流程。
+	if let Some(state) = app.try_state::<std::sync::Arc<crate::backend::AppState>>() {
+		if let Some(url) = state.current_url() {
+			if show_main(app, &url).is_ok() {
+				return;
+			}
+		}
+	}
+
 	if let Some(window) = app.get_webview_window("splash") {
 		let _ = window.show();
 		let _ = window.unminimize();
