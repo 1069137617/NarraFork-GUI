@@ -1,0 +1,6 @@
+# 国内网络：crates.io 走 rsproxy 稀疏索引。仅作用于 desktop 工程。
+[source.crates-io]
+replace-with = "rsproxy-sparse"
+
+[source.rsproxy-sparse]
+registry = "sparse+https://rsproxy.cn/index/"

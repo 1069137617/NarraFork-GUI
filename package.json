@@ -1,0 +1,25 @@
+{
+	"name": "narrafork-desktop",
+	"private": true,
+	"version": "0.1.0",
+	"type": "module",
+	"license": "MPL-2.0",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc --noEmit && vite build",
+		"preview": "vite preview",
+		"tauri": "tauri",
+		"bundle": "bun run prepare:sidecar && tauri build --config src-tauri/tauri.bundle.conf.json",
+		"icons": "tauri icon icon-source.png",
+		"prepare:sidecar": "bun scripts/prepare-sidecar.ts"
+	},
+	"dependencies": {
+		"@tauri-apps/api": "^2"
+	},
+	"devDependencies": {
+		"@tauri-apps/cli": "^2",
+		"@types/node": "^26.6.6",
+		"typescript": "^5.9.3",
+		"vite": "^8.0.0"
+	}
+}

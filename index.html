@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>NarraFork</title>
+		<link rel="stylesheet" href="/src/style.css" />
+	</head>
+	<body>
+		<main class="shell">
+			<header class="brand">
+				<div class="mark-wrap">
+					<img class="logo" src="./src/assets/logo.png" alt="NarraFork" width="44" height="44" />
+				</div>
+				<div>
+					<h1>NarraFork</h1>
+					<p class="subtitle">Desktop · 正在启动核心</p>
+				</div>
+			</header>
+
+			<div class="status" id="status">
+				<span class="dot" id="dot"></span>
+				<span id="message">正在启动核心…</span>
+			</div>
+
+			<div class="progress" id="progress"><span></span></div>
+
+			<section class="log-card">
+				<div class="log-head">
+					<span>启动日志</span>
+					<span id="logHint">等待输出</span>
+				</div>
+				<pre class="log" id="log"></pre>
+			</section>
+
+			<dl class="meta" id="meta" hidden>
+				<div><dt>核心版本</dt><dd id="version">—</dd></div>
+				<div><dt>地址</dt><dd id="url">—</dd></div>
+			</dl>
+
+			<pre class="detail" id="detail" hidden></pre>
+
+			<div class="actions">
+				<button id="retry" type="button" class="primary" hidden>重试</button>
+				<button id="logs" type="button" hidden>打开日志</button>
+				<button id="quit" type="button" class="ghost">退出</button>
+			</div>
+		</main>
+		<script type="module" src="/src/main.ts"></script>
+	</body>
+</html>
