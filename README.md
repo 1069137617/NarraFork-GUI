@@ -10,7 +10,7 @@ NarraFork 的非官方桌面壳（Tauri v2 + WebView2）。启动时拉起本机
 - **不探测、不复用外部实例**：每次由壳拉起自己管理的核心，端口与就绪状态只来自后端的 `NarraFork server running on …` 启动行。
 - **与后端同源**：不打包前端副本。登录态、localStorage、Service Worker 全部按浏览器语义工作，UI 与后端版本天然一致。
 - **进程不残留**：后端子进程加入 Windows Job Object（`KILL_ON_JOB_CLOSE`），壳崩溃时一起结束。
-- **托盘与单实例**：显示窗口、在浏览器打开、重启后端、打开日志、退出。关闭主窗口留在托盘，二次启动或托盘点击会直接恢复主窗口。
+- **托盘与单实例**：显示窗口、在浏览器打开、重启后端、打开日志、源码与许可证、退出。关闭主窗口留在托盘，二次启动或托盘点击会直接恢复主窗口。
 - **最小权限**：远程页面不授予 Tauri IPC；外部链接交给系统浏览器。
 - **无控制台窗口**：Windows 上 debug 构建也使用 GUI 子系统，日志写入文件。
 
@@ -154,8 +154,8 @@ bun run build                  # tsc 类型检查 + Vite 构建
 
 发布内置 sidecar 的安装包时：
 
-1. 安装目录附 MPL-2.0 全文（本仓库 `LICENSE`）。
-2. 固定 sidecar 的 `version + commit`，在“关于”页给出对应源码链接（`sidecar.json` 已记录）。
+1. 安装包会展示 MPL-2.0 全文（`bundle.licenseFile`），安装目录同时附带 `LICENSE`。
+2. `sidecar.json` 随安装目录分发，记录 sidecar 的 `version + commit + sourceUrl`；托盘「源码与许可证」会打开对应源码地址。
 3. 保留后端自带的 `/licenses` 页面（约 1280 个第三方组件，含 Bun/JSC 的 LGPL-2 relink 说明）。
 4. 不要复制 NarraFork 源码文件进壳；所需逻辑重新实现。
 

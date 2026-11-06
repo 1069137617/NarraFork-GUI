@@ -122,7 +122,10 @@ const metadata = {
 	preparedAt: new Date().toISOString(),
 };
 
-writeFileSync(join(desktopDir, "sidecar.json"), `${JSON.stringify(metadata, null, 2)}\n`);
+const serialized = `${JSON.stringify(metadata, null, 2)}\n`;
+writeFileSync(join(desktopDir, "sidecar.json"), serialized);
+// 打包资源：安装目录内也放一份，便于接收者核对版本与源码地址。
+writeFileSync(join(desktopDir, "src-tauri", "sidecar.json"), serialized);
 console.log(`sidecar ready: ${target}`);
 console.log(`  narrafork ${metadata.version} @ ${commit.slice(0, 8)}`);
 console.log(`  sha256 ${sha256}`);

@@ -75,10 +75,10 @@ NarraFork 是 MPL-2.0 文件级弱 copyleft。壳本身可以闭源；义务只�
 
 ### 6.1 内置 sidecar 时的四件事
 
-- [ ] 安装目录附 MPL-2.0 `LICENSE` 全文（不得移除版权/许可/免责声明）。
-- [ ] 固定 sidecar 的 `version + commit`，在“关于”页给出可访问的对应源码链接（MPL §3.2(a)）；`sidecar.json` 记录 `version/commit/sourceUrl`，构建时校验。
-- [ ] 保留后端 `/licenses` 页面（约 1280 个第三方组件，含 Bun/JSC 的 LGPL-2 relink 说明），不得替换或删除。
-- [ ] 不复制仓库源码进壳（`listen-log.ts`、`backend-process.ts`、`shared/*`）。所需逻辑重新实现，避免把 MPL 文件带进闭源产物。
+- [x] 安装包展示 MPL-2.0 全文并随装 `LICENSE`（`bundle.licenseFile` + resources）。
+- [x] 固定 sidecar 的 `version + commit`，安装目录带 `sidecar.json`；托盘「源码与许可证」打开对应源码链接（MPL §3.2(a)）。
+- [x] 保留后端 `/licenses` 页面（约 1280 个第三方组件，含 Bun/JSC 的 LGPL-2 relink 说明），不替换或删除。
+- [x] 不复制仓库源码进壳（`listen-log.ts`、`backend-process.ts`、`shared/*`）；所需逻辑重新实现。
 
 ### 6.2 若修改后端
 

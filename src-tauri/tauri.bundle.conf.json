@@ -1,6 +1,8 @@
 {
 	"$schema": "https://schema.tauri.app/config/2",
 	"bundle": {
-		"externalBin": ["binaries/narrafork"]
+		"externalBin": ["binaries/narrafork"],
+		"licenseFile": "LICENSE",
+		"resources": ["LICENSE", "sidecar.json"]
 	}
 }

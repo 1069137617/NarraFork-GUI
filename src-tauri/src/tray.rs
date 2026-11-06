@@ -11,12 +11,23 @@ pub fn install(app: &AppHandle) -> tauri::Result<()> {
 	let open = MenuItem::with_id(app, "open", "在浏览器中打开", true, None::<&str>)?;
 	let restart = MenuItem::with_id(app, "restart", "重启后端", true, None::<&str>)?;
 	let logs = MenuItem::with_id(app, "logs", "打开日志", true, None::<&str>)?;
+	let about = MenuItem::with_id(app, "about", "源码与许可证", true, None::<&str>)?;
 	let separator = PredefinedMenuItem::separator(app)?;
+	let separator_two = PredefinedMenuItem::separator(app)?;
 	let quit = MenuItem::with_id(app, "quit", "退出", true, None::<&str>)?;
 
 	let menu = Menu::with_items(
 		app,
-		&[&show, &open, &restart, &logs, &separator, &quit],
+		&[
+			&show,
+			&open,
+			&restart,
+			&logs,
+			&separator,
+			&about,
+			&separator_two,
+			&quit,
+		],
 	)?;
 
 	let mut builder = TrayIconBuilder::with_id("main")
@@ -28,6 +39,7 @@ pub fn install(app: &AppHandle) -> tauri::Result<()> {
 			"open" => backend::open_in_browser(app),
 			"restart" => backend::restart_from_tray(app),
 			"logs" => backend::open_logs(app),
+			"about" => backend::open_source_info(app),
 			"quit" => app.exit(0),
 			_ => {}
 		})

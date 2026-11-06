@@ -783,6 +783,39 @@ pub fn open_logs(app: &AppHandle) {
 	}
 }
 
+/// 打开随包 `sidecar.json` 里记录的源码地址；找不到时回落到壳仓库。
+pub fn open_source_info(app: &AppHandle) {
+	let url =
+		bundled_source_url(app).unwrap_or_else(|| "https://github.com/1069137617/NarraFork-GUI".to_string());
+	let _ = tauri_plugin_opener::open_url(&url, None::<&str>);
+}
+
+fn bundled_source_url(app: &AppHandle) -> Option<String> {
+	let mut candidates = Vec::new();
+	if let Ok(resources) = app.path().resource_dir() {
+		candidates.push(resources.join("sidecar.json"));
+	}
+	if let Ok(executable) = env::current_exe() {
+		if let Some(directory) = executable.parent() {
+			candidates.push(directory.join("sidecar.json"));
+		}
+	}
+	candidates.push(PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("sidecar.json"));
+
+	for path in candidates {
+		let Ok(text) = std::fs::read_to_string(&path) else {
+			continue;
+		};
+		let Ok(value) = serde_json::from_str::<serde_json::Value>(&text) else {
+			continue;
+		};
+		if let Some(url) = value.get("sourceUrl").and_then(|value| value.as_str()) {
+			return Some(url.to_string());
+		}
+	}
+	None
+}
+
 #[cfg(windows)]
 mod job {
 	use std::os::windows::io::AsRawHandle;
